@@ -1,0 +1,246 @@
+/* CSS RESET */
+* {
+  margin:0; 
+  padding:0; 
+  box-sizing: border-box;
+}
+
+body {
+  line-height: 1.6; 
+  background-color: #92487A;
+}
+
+/* 1. CSS Custom Properties (Variables) */
+:root {
+  --primary-color: #92487A;
+  --secondary-color: #F9F8F6;
+  /* Add more variables */
+}
+
+/* Text */
+h1 {
+  position: static; 
+  color: var(--secondary-color);
+  margin:auto; 
+  width: 30%; 
+  text-align: center; 
+} 
+
+h2 {
+  position: relative; 
+  text-align: center; 
+  top: 0%; 
+}
+
+input {
+  width: 100%;
+}
+
+small {
+  color: #808080;
+}
+
+/* Forms */
+button.register {
+  position:relative; 
+  width: 75%; 
+  padding: 5px; 
+  margin-top: 5px;
+  left: 50%;
+  -ms-transform: traslateX(-50%); 
+  transform: translateX(-50%); 
+}
+
+.container {
+  position: static; 
+  width: 500px; 
+  padding: 25px;
+  padding-top: 8px; 
+  background-color: var(--secondary-color);
+  margin:auto; 
+  margin-top: 20px; 
+  margin-bottom: 20px;  
+  border-radius: 25px; 
+}
+
+.form-group {
+  position: relative; 
+  width: 100%;
+  outline-style: solid;
+  outline-color: gray; 
+  outline-width: thin;
+  padding: 4px; 
+  margin:auto; 
+  margin-top:20px; 
+  margin-bottom: 10px; 
+  border-radius: 5px; 
+  text-align: left;
+}
+
+/* 5. Utilities */
+/* Helper classes, responsive utilities */
+
+/* 6. Media Queries */
+/* Responsive breakpoints */
+
+
+/* FORMS */
+input:valid {
+  border-color: #28a745;
+  background-color: #f8fff9; 
+}
+
+input:invalid {
+  border-color: #dc3545;
+  background-color: #fff5f5;
+}
+
+input:focus:valid {
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+input:focus:invalid {
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+
+/* DASHBOARD PAGE */
+.balance {
+  color: var(--secondary-color); 
+  font-size: 30px; 
+  font-weight: bold; 
+  text-align: center; 
+  margin-top: 8px; 
+}
+
+.logout {
+  position: absolute; 
+  left: 80%; 
+  width: 70px; 
+  background-color: var(--secondary-color); 
+  padding: 2px 6px 2px 6px; 
+  border-radius: 4px; 
+  text-decoration: none;
+  text-align: center; 
+  margin-top: 8px; 
+}
+
+h2.description {
+  color: var(--secondary-color); 
+  font-size: 18px; 
+  font-weight: bold; 
+  text-align: center; 
+}
+
+table {
+  width: 450px; 
+  margin:auto;
+  margin-top: 20px; 
+  border-collapse: collapse; 
+}
+
+th, td {
+  text-align: left; 
+  padding: 4px;
+  border: 1px solid; 
+}
+
+tr:nth-of-type(odd) td {
+  background-color: #eeeeee; 
+}
+
+tr:nth-of-type(even) td {
+  background-color: var(--secondary-color); 
+  margin:auto; 
+}
+
+button.transaction {
+  width: 150px;
+  height: 50px; 
+  padding: 4px; 
+  font-size: 16px; 
+  font-weight: bold; 
+} 
+
+button.close {
+  position: relative; 
+  width: 30px; 
+  height: 30px; 
+  background: rgba(0, 0, 0, 0);
+  border: none; 
+  color: white; 
+  padding: 4px; 
+  text-align: center; 
+  display: inline-block; 
+  border-radius: 50%; 
+  font-size: 16px; 
+  left: 80%; 
+  margin: auto; 
+}
+
+button.close:hover {
+  background-color: #86697d;
+}
+
+.search {
+  margin-bottom: 16px; 
+  display:flex; 
+  gap:6px; 
+  flex-wrap:wrap;
+  font-size: 12px; 
+}
+
+.floating {
+  position: -webkit-sticky; 
+  position: sticky; 
+  top: 10px;  
+  width: 150px;
+  z-index: 99; 
+  margin:auto;
+}
+
+/* Create transaction container */
+.createTransaction {
+  position: fixed; 
+  top: 0; left: 0; bottom: 0; right: 0; 
+  margin:auto; 
+  width: 450px; 
+  height: 400px; 
+
+  background-color: var(--primary-color);
+  border-radius: 16px; 
+  border: 5px solid grey;    
+  
+  text-align:center;  
+  color: var(--secondary-color); 
+  font-weight: bold; 
+  font-size:25px; 
+
+  z-index:100; 
+}
+
+.createInner {
+  width: 90%; 
+  height: 75%; 
+  margin:auto; 
+  margin-top: 20px;  
+
+  background-color: var(--secondary-color); 
+  border-radius: 8px; 
+}
+
+form.newTransaction {
+  width: 90%; 
+  height: 100%;
+  padding-top: 1px; 
+  margin:auto; 
+  color: grey; 
+  font-size: 16px; 
+}
+
+button.create {
+  width: 100px; 
+  height: 30px;
+}
+
+
