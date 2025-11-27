@@ -2,26 +2,50 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors')
 const crypto = require('crypto');
+const fs = require('fs'); 
+const path = require('path'); 
 const pkg = require('./package.json');
 
 // App constants
 const port = process.env.PORT || 5000;
 const apiPrefix = '/api';
 
-// Store data in-memory, not suited for production use!
-const db = {
-  test: {
-    user: 'test',
-    currency: '$',
-    description: `Test account`,
-    balance: 75,
-    transactions: [
-      { id: '1', date: '2020-10-01', object: 'Pocket money', amount: 50 },
-      { id: '2', date: '2020-10-03', object: 'Book', amount: -10 },
-      { id: '3', date: '2020-10-04', object: 'Sandwich', amount: -5 }
-    ],
+//store data
+const dataDir = path.resolve(__dirname, 'data'); 
+const dataFile = path.join(dataDir, 'accounts.json'); 
+
+//Load & Save db
+function ensureDataDir() {
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true }); 
   }
-};
+}
+
+function loadDb() {
+  try {
+    ensureDataDir(); 
+    if (fs.existsSync(dataFile)) {
+      const raw = fs.readFileSync(dataFile, 'utf8'); 
+      return JSON.parse(raw); 
+    }
+  } catch (error) {
+    console.error('Failed to load DB file: ', error); 
+  }
+}
+
+function saveDb(db) {
+  try {
+    ensureDataDir();
+    const tmp = `${dataFile}.tmp`;
+    fs.writeFileSync(tmp, JSON.stringify(db, null, 2), 'utf8'); 
+    fs.renameSync(tmp, dataFile); 
+    console.log('saved to DB'); 
+  } catch (error) {
+    console.error('Failed to save to DB file: ', error); 
+  }
+}
+
+const db = loadDb(); 
 
 // Create the Express app & setup middlewares
 const app = express();
@@ -81,6 +105,8 @@ router.post('/accounts', (req, res) => {
   };
   db[req.body.user] = account;
 
+  saveDb(db); 
+
   return res.status(201).json(account);
 });
 
@@ -111,7 +137,7 @@ router.delete('/accounts/:user', (req, res) => {
 
   // Removed account
   delete db[req.params.user];
-
+  saveDb(db); 
   res.sendStatus(204);
 });
 
@@ -164,7 +190,8 @@ router.post('/accounts/:user/transactions', (req, res) => {
 
   // Update balance
   account.balance += transaction.amount;
-
+  
+  saveDb(db); 
   return res.status(201).json(transaction);
 });
 
@@ -190,7 +217,8 @@ router.delete('/accounts/:user/transactions/:id', (req, res) => {
 
   // Remove transaction
   account.transactions.splice(transactionIndex, 1);
-
+  
+  saveDb(db); 
   res.sendStatus(204);
 });
 

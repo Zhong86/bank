@@ -60,7 +60,7 @@ function navigate(path) {
 
 function onLinkClick(event) {
   event.preventDefault(); 
-  navigate(event.target.href); 
+  logout(); 
 }
 
 //FORM HANDLING
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //CREATE ACCOUNT
 async function createAccount(account) {
   try {
-    const response = await fetch('//192.168.1.11:5000/api/accounts', {
+    const response = await fetch('http://192.168.1.11:5000/api/accounts', {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json', 
@@ -149,7 +149,7 @@ async function login() {
 async function getAccount(user) {
   try {
     //fetches data asynchronously
-    const response = await fetch('//192.168.1.11:5000/api/accounts/' + encodeURIComponent(user)); 
+    const response = await fetch('http://192.168.1.11:5000/api/accounts/' + encodeURIComponent(user)); 
     return await response.json(); 
   } catch (error) {
     return { error: error.message || 'Unknown error' }; 
@@ -157,10 +157,9 @@ async function getAccount(user) {
 }
 
 function logout() {
+  console.log('logging out');
   updateState('account', null); 
   navigate('/login'); 
-
-  console.log('logging out');
 }
 
 //UPDATE UI
@@ -352,7 +351,7 @@ async function newTransaction() {
 async function createTransaction(transaction) {
   try {
     const name = state.account.user;
-    const response = await fetch(`//192.168.1.11:5000/api/accounts/${name}/transactions`, {
+    const response = await fetch(`http://192.168.1.11:5000/api/accounts/${name}/transactions`, {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json', 
