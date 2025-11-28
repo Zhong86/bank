@@ -1,0 +1,150 @@
+<!-- Balancing persistence with data freshness -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense App</title>
+  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">Loading...</div>
+  <!--  Login page -->
+  <template id="login">
+    <h1 style="width: 70%;left:50%">Expense App</h1>
+      <section>
+        <div class="container">
+          <h2>Login</h2>
+          <form id="loginForm" action="javascript: login()">
+            <div class="ferm-group">
+              <label for="username">Username</label> <br>
+              <input id="username" name="user" type="text" required 
+                autocomplete="username" placeholder="Enter your username">
+            </div>
+            <div id="loginError" role="alert"></div>
+            <button class="register" type="submit">Login</button>
+          </form>
+        </div>
+      </section>
+      <div class="container">
+        <h2>Register</h2>
+        <form id="registerForm" method="POST"> <!-- Redirects to action on submit -->
+          <div class="form-group"> <!-- Username -->
+            <label for="user">Username <span class="required">*</span></label> <br>
+            <input type="text" name="user" id="user" required
+              minlength="3" maxlength="20" pattern="[a-zA-Z0-9_]+"
+              autocomplete="username" title="Username must be 3-20 characters, letters, numbers, and underscores only"> <br>
+            <small class="form-text">Choose a unique username (3-20 characters)</small>
+          </div>
+          <div class="form-group">  <!-- Type of currency for bank -->
+            <label for="currency">Currency <span class="required">*</span></label> <br>
+            <input type="text" name="currency" value="Rp" id="currency" required
+              maxlength="3" pattern="[A-Z$€£¥₹]+[a-z]" title="Enter a valid currency symbol or code"> <br>
+            <small class="form-text">Currency symbol (e.g., $, Rp)</small>
+          </div>
+          <div class="form-group"> <!--  Purpose of the bank / storage -->
+            <label for="description">Account Description</label> <br>
+            <input id="description" type="text" name="description" 
+              maxlength="100" placeholder="Personal savings, checking, etc."> <br>
+            <small class="form-text">Optional description (max 100 characters)</small>
+          </div>
+          <div class="form-group" > <!--  Starting balance -->
+            <label for="balance">Starting Balance</label> <br>
+            <input id="balance" type="number" name="balance" value="0"
+              min="0" step="0.01" title="Enter a positive number for your starting balance" required> <br>
+            <small class="form-text">Initial account balance (no minimum)</small>
+          </div>
+          <div id="registerError" role="alert"></div>
+          <button class="register" type="submit">Create Account</button>
+        </form>
+      </div>
+    </template>
+
+    <!--  Balance Page -->
+    <template id="dashboard">
+      <header>
+        <a class="logout" href="/login" onclick="onLinkClick(event)">Logout</a>
+      </header>
+      <section class="balance">
+        Balance <span id="currency"></span><span id="balance"></span> 
+      </section>
+      <div class="createTransaction" id="createTransactionBloc" style="display: none;">
+        <button class="close" type="button" onclick="hideElement('createTransactionBloc')">x</button>
+        Create New Transaction
+        <div class="createInner">
+          <form id="newTransaction" class="newTransaction" method="POST">
+            <div class="form-group">
+              <label for="date">Date</label>
+              <input type="date" id="date" name="date" required>
+            </div>
+            <div class="form-group">
+              <label for="object">Object</label>
+              <input type="text" id="object" name="object" maxlength="100" required>
+            </div>
+            <div class="form-group">
+              <label for="priceprice">Price</label>
+              <input type="number" id="price" name="price" step="0.01" required>
+            </div>
+            <button type="submit" class="create">Create</button>
+          </form>
+        </div>
+      </div>
+      <section>
+        <h2 class="description" id="description"></h2> <br>
+        <div class="floating">
+          <button class="transaction" onclick="showElement('createTransactionBloc')">Add Transaction</button>
+        </div>
+        <div class="container" >
+          <form id="search-form" class="search" aria-label="Transaction search form">
+            <label>
+              Date from <br>
+              <input type="date" id="date-from" name="dateFrom">
+            </label>
+            <label >
+              Date to 
+              <input type="date" id="date-to" name="dateTo">
+            </label>
+            <div style="display:flex; gap:8px; width:100%;">
+              <label >
+                Min price
+                <input type="number" step="0.01" id="price-min" name="priceMin">
+              </label>
+              <label >
+                Max price
+                <input type="number" step="0.01" id="price-max" name="priceMax">
+              </label>
+            </div>
+            <label style="flex:1 1 200px;" >
+              Description
+              <input type="text" id="search-description" name="search-description">
+            </label> <br>
+            <div style="flex-basis: 100%; display:flex; gap:8px; align-items:flex-end;">
+              <button type="submit" id="search-btn">Search</button>
+              <button type="button" id="clear-filters">Clear Filters</button>
+            </div>
+          </form>
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Object</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody id="transactions"></tbody>
+          </table>  
+        </div> 
+      </section>
+    </template>
+    <!-- TRANSACTIONS -->
+    <template id="transaction"> 
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </template>
+  </body>
+</html>
