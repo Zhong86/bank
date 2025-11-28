@@ -221,7 +221,7 @@ function createTransactionRow(transaction) {
   const tr = transactionRow.querySelector('tr'); 
   tr.children[0].textContent = transaction.date; 
   tr.children[1].textContent = transaction.object; 
-  tr.children[2].textContent = transaction.amount.toFixed(2); 
+  tr.children[2].textContent = transaction.price.toFixed(2); 
   return transactionRow; 
 }
 
@@ -235,14 +235,14 @@ function parseDateSafe(value) { //parse data safely: accepts YYYY-MM-DD
 function getFiltersFromForm() {
   const dateFromEl = document.getElementById('date-from');
   const dateToEl = document.getElementById('date-to');
-  const amountMinEl = document.getElementById('amount-min');
-  const amountMaxEl = document.getElementById('amount-max');
+  const priceMinEl = document.getElementById('price-min');
+  const priceMaxEl = document.getElementById('price-max');
   const descriptionEl = document.getElementById('description');
 
   const dateFromStr = dateFromEl ? dateFromEl.value : '';
   const dateToStr = dateToEl ? dateToEl.value : '';
-  const amountMinStr = amountMinEl ? amountMinEl.value : '';
-  const amountMaxStr = amountMaxEl ? amountMaxEl.value : '';
+  const priceMinStr = priceMinEl ? priceMinEl.value : '';
+  const priceMaxStr = priceMaxEl ? priceMaxEl.value : '';
   const descriptionStr = descriptionEl ? descriptionEl.value : '';
  
   let fromDate = parseDateSafe(dateFromStr); 
@@ -255,30 +255,30 @@ function getFiltersFromForm() {
     toDate = tmp; 
   }
 
-  let minAmount = amountMinStr === '' ? null : Number(amountMinStr); 
-  let maxAmount = amountMaxStr === '' ? null : Number(amountMaxStr); 
+  let minPrice = priceMinStr === '' ? null : Number(priceMinStr); 
+  let maxPrice = priceMaxStr === '' ? null : Number(priceMaxStr); 
 
-  if (minAmount !== null && Number.isNaN(minAmount)) minAmount = null;
-  if (maxAmount !== null && Number.isNaN(maxAmount)) maxAmount = null;
+  if (minPrice !== null && Number.isNaN(minPrice)) minPrice = null;
+  if (maxPrice !== null && Number.isNaN(maxPrice)) maxPrice = null;
 
-  if (minAmount !== null && maxAmount !== null && minAmount > maxAmount) {
-    const tmp = minAmount; 
-    minAmount = maxAmount; 
-    maxAmount = tmp; 
+  if (minPrice !== null && maxPrice !== null && minPrice > maxPrice) {
+    const tmp = minPrice; 
+    minPrice = maxPrice; 
+    maxPrice = tmp; 
   }
 
   const keywords = (descriptionStr || '')
     .split(/\s+/).map(s => s.trim()).filter(Boolean).map(s => s.toLowerCase()); 
   
-  return { fromDate, toDate, minAmount, maxAmount, keywords }; 
+  return { fromDate, toDate, minPrice, maxPrice, keywords }; 
 }
 
 
 function filterTransactions(filters, transactions = []) {
   const noFilters = 
     !filters ||  
-    (!filters.fromDate && !filters.toDate && filters.minAmount == null 
-      && filters.maxAmount== null && (!filters.keywords || filters.keywords.length === 0))
+    (!filters.fromDate && !filters.toDate && filters.minPrice == null 
+      && filters.maxPrice== null && (!filters.keywords || filters.keywords.length === 0))
   if (noFilters) {
     return transactions.slice(); 
   }
@@ -293,9 +293,9 @@ function filterTransactions(filters, transactions = []) {
       if (filters.toDate && txDate > filters.toDate) return false; 
     }
 
-    //amount check 
-    if (filters.minAmount != null && Number(tx.amount) < filters.minAmount) return false;
-    if (filters.maxAmount != null && Number(tx.amount) > filters.maxAmount) return false;
+    //price check 
+    if (filters.minPrice != null && Number(tx.price) < filters.minPrice) return false;
+    if (filters.maxPrice != null && Number(tx.price) > filters.maxPrice) return false;
     
     //description 
     if (filters.keywords && filters.keywords.length > 0) {
@@ -390,7 +390,7 @@ function attachDashboardListeners() {
       e.preventDefault(); 
       updateDashboard(); 
     });
-    const inputs = ['date-form', 'date-to', 'amount-min', 'amount-max', 'description'];
+    const inputs = ['date-form', 'date-to', 'price-min', 'price-max', 'description'];
     inputs.forEach(id => {
       const el = document.getElementById(id); 
       if (!el) return; 

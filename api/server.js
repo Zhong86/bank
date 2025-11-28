@@ -153,25 +153,25 @@ router.post('/accounts/:user/transactions', (req, res) => {
   }
 
   // Check mandatory requests parameters
-  if (!req.body.date || !req.body.object || !req.body.amount) {
+  if (!req.body.date || !req.body.object || !req.body.price) {
     return res.status(400).json({ error: 'Missing parameters' });
   }
 
-  // Convert amount to number if needed
-  let amount = req.body.amount;
-  if (amount && typeof amount !== 'number') {
-    amount = parseFloat(amount);
+  // Convert price to number if needed
+  let price = req.body.price;
+  if (price && typeof price !== 'number') {
+    price = parseFloat(price);
   }
 
-  // Check that amount is a valid number
-  if (amount && isNaN(amount)) {
-    return res.status(400).json({ error: 'Amount must be a number' });
+  // Check that price is a valid number
+  if (price && isNaN(price)) {
+    return res.status(400).json({ error: 'Price must be a number' });
   }
 
   // Generates an ID for the transaction
   const id = crypto
     .createHash('md5')
-    .update(req.body.date + req.body.object + req.body.amount)
+    .update(req.body.date + req.body.object + req.body.price)
     .digest('hex');
 
   // Check that transaction does not already exist
@@ -184,12 +184,12 @@ router.post('/accounts/:user/transactions', (req, res) => {
     id,
     date: req.body.date,
     object: req.body.object,
-    amount,
+    price,
   };
   account.transactions.push(transaction);
 
   // Update balance
-  account.balance += transaction.amount;
+  account.balance += transaction.price;
   
   saveDb(db); 
   return res.status(201).json(transaction);
