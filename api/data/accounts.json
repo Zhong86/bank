@@ -1,0 +1,80 @@
+{
+  "test": {
+    "user": "test",
+    "currency": "$",
+    "description": "Test account",
+    "balance": 75,
+    "transactions": [
+      {
+        "id": "1",
+        "date": "2020-10-01",
+        "object": "Pocket money",
+        "price": 50
+      },
+      {
+        "id": "2",
+        "date": "2020-10-03",
+        "object": "Book",
+        "price": -10
+      },
+      {
+        "id": "3",
+        "date": "2020-10-04",
+        "object": "Sandwich",
+        "price": -5
+      }
+    ]
+  },
+  "mom7928": {
+    "user": "mom7928",
+    "currency": "Rp",
+    "description": "Shopping List",
+    "balance": 112500,
+    "transactions": [
+      {
+        "id": "5a0c4888e5045a64b5646712141c4d23",
+        "date": "2025-11-28",
+        "object": "Ayam Dada Tulang 1 kg",
+        "price": 38000
+      },
+      {
+        "id": "6f46f252bd6246a5846b2b1b32b328ab",
+        "date": "2025-11-28",
+        "object": "Singkong 1 kg",
+        "price": 10000
+      },
+      {
+        "id": "541ee3b624271ca1186f6ff11f448b80",
+        "date": "2025-11-28",
+        "object": "Telor Ayam 0.5 kg Negeri",
+        "price": 14500
+      },
+      {
+        "id": "adf1f2c9d09334b1935e249a555482b8",
+        "date": "2025-11-28",
+        "object": "Pertalite 5 L",
+        "price": 50000
+      }
+    ]
+  },
+  "bob": {
+    "user": "bob",
+    "currency": "Rp",
+    "description": "bob's budget",
+    "balance": 2000000,
+    "transactions": [
+      {
+        "id": "44e1ef276a9be21ac0bd5f6e16cc511e",
+        "date": "2025-11-28",
+        "object": "Toy",
+        "price": 1000000
+      },
+      {
+        "id": "b71473e6774bc87b2e55b22381ddd801",
+        "date": "2025-11-28",
+        "object": "feafea",
+        "price": 1000000
+      }
+    ]
+  }
+}

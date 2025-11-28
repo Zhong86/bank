@@ -185,6 +185,7 @@ router.post('/accounts/:user/transactions', (req, res) => {
     date: req.body.date,
     object: req.body.object,
     price,
+    location: req.body.location
   };
   account.transactions.push(transaction);
 

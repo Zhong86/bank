@@ -200,19 +200,24 @@ function updateDashboard() {
   }
 
   updateElement('description', account.description); 
-  updateElement('balance', account.balance.toFixed(2)); 
-  updateElement('currency', account.currency); 
-
+  updateElement('currency', `${account.currency} `); 
+  
   const filters = getFiltersFromForm(); 
   const results = filterTransactions(filters, account.transactions); 
-
+  let balance = 0; 
+  
   const transactionRows = document.createDocumentFragment(); 
   for (const transaction of results) {
     const transactionRow = createTransactionRow(transaction); 
     transactionRows.appendChild(transactionRow); 
+    balance += transaction.price; 
   }
-  updateElement('transactions', transactionRows); 
+  
+  const formattedBalance = balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ".00";
 
+  updateElement('transactions', transactionRows); 
+  updateElement('balance', formattedBalance); 
+  
 }
 
 function createTransactionRow(transaction) {
@@ -237,7 +242,7 @@ function getFiltersFromForm() {
   const dateToEl = document.getElementById('date-to');
   const priceMinEl = document.getElementById('price-min');
   const priceMaxEl = document.getElementById('price-max');
-  const descriptionEl = document.getElementById('description');
+  const descriptionEl = document.getElementById('search-description');
 
   const dateFromStr = dateFromEl ? dateFromEl.value : '';
   const dateToStr = dateToEl ? dateToEl.value : '';
@@ -280,6 +285,7 @@ function filterTransactions(filters, transactions = []) {
     (!filters.fromDate && !filters.toDate && filters.minPrice == null 
       && filters.maxPrice== null && (!filters.keywords || filters.keywords.length === 0))
   if (noFilters) {
+    console.log('no filter'); 
     return transactions.slice(); 
   }
   
@@ -299,7 +305,8 @@ function filterTransactions(filters, transactions = []) {
     
     //description 
     if (filters.keywords && filters.keywords.length > 0) {
-      const desc = (tx.description || '').toLowerCase(); 
+      const desc = (tx.object || '').toLowerCase(); 
+      console.log(desc);
       if(!desc) return false; 
       const allPresent = filters.keywords.every(kw => desc.includes(kw)); 
       if (!allPresent) return false; 

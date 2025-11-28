@@ -68,7 +68,7 @@
         <a class="logout" href="/login" onclick="onLinkClick(event)">Logout</a>
       </header>
       <section class="balance">
-        Balance <span id="currency"></span><span id="balance"></span> 
+        Balance <br> <span id="currency"></span><span id="balance"></span> 
       </section>
       <div class="createTransaction" id="createTransactionBloc" style="display: none;">
         <button class="close" type="button" onclick="hideElement('createTransactionBloc')">x</button>
@@ -86,6 +86,10 @@
             <div class="form-group">
               <label for="priceprice">Price</label>
               <input type="number" id="price" name="price" step="0.01" required>
+            </div>
+            <div class="form-group">
+              <label for="location">Location (Optional)</label>
+              <input type="text" id="location" name="location" maxlength="100" >
             </div>
             <button type="submit" class="create">Create</button>
           </form>

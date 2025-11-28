@@ -205,7 +205,7 @@ button.close:hover {
   top: 0; left: 0; bottom: 0; right: 0; 
   margin:auto; 
   width: 450px; 
-  height: 400px; 
+  height: 500px; 
 
   background-color: var(--primary-color);
   border-radius: 16px; 
@@ -221,7 +221,7 @@ button.close:hover {
 
 .createInner {
   width: 90%; 
-  height: 75%; 
+  height: 80%; 
   margin:auto; 
   margin-top: 20px;  
 
