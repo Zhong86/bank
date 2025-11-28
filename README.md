@@ -1,2 +1,0 @@
-# bank
-Practice bank app
